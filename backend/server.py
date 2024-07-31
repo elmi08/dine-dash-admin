@@ -15,7 +15,7 @@ from models import Restaurant, Product  # Import models
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}})
 
 # Connect to MongoDB using MongoEngine
 MONGO_URI = os.getenv("MONGO_URI")
@@ -278,7 +278,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-@app.route('/edit-product/<product_id>', methods=['PUT'])
+@app.route('/edit-product/<product_id>/', methods=['PUT'])
 def edit_product(product_id):
     try:
         data = request.get_json()
